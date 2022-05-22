@@ -12,6 +12,7 @@ class TodoListItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: ValueKey("ItemWidget"),
       behavior: HitTestBehavior.translucent,
       onTap: () {
         onItemClicked?.call();

@@ -20,4 +20,8 @@ abstract class TaskDao {
 
   @delete
   Future<void> deleteTask(TaskModel task);
+
+  @Query('DELETE FROM TaskModel')
+  Future<void> deleteAllData();
+
 }

@@ -9,7 +9,7 @@ class ToastHelper {
       msg: msg ?? '',
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.TOP,
-      backgroundColor: isTrue ? UIColor.green : UIColor.red,
+      backgroundColor: isTrue ? UIColor.blue : UIColor.red,
       textColor: Colors.white,
     );
   }

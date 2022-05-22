@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_service/keyboard_service.dart';
+import 'package:manabie_todolist/helpers/toast_helper.dart';
 import 'package:manabie_todolist/model/task_model.dart';
 import 'package:manabie_todolist/theme/ui_color.dart';
 import 'package:manabie_todolist/theme/ui_text_style.dart';
@@ -11,7 +12,11 @@ class TaskDetailWidget extends StatelessWidget {
   final Function(TaskModel)? onSaveBtnClicked;
   final Function(TaskModel)? onCreateBtnClicked;
   final Function(TaskModel)? onDeleteBtnClicked;
-  const TaskDetailWidget({Key? key, this.task, this.onSaveBtnClicked, this.onDeleteBtnClicked, this.onCreateBtnClicked}) : super(key: key);
+  final TextEditingController titleController;
+  final TextEditingController descriptionController;
+  const TaskDetailWidget(
+      {Key? key, this.task, this.onSaveBtnClicked, this.onDeleteBtnClicked, this.onCreateBtnClicked, required this.titleController, required this.descriptionController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +72,8 @@ class TaskDetailWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     TextField(
-                      controller: TextEditingController(text: task?.title ?? ""),
+                      key: ValueKey("titleTextField"),
+                      controller: titleController,
                       decoration: InputDecoration(
                         hintText: "Tiêu đề",
                         hintStyle: UITextStyle.grey_16_w400,
@@ -87,7 +93,8 @@ class TaskDetailWidget extends StatelessWidget {
                       height: 8.0,
                     ),
                     TextField(
-                      controller: TextEditingController(text: task?.description ?? ""),
+                      key: ValueKey("descriptionTextField"),
+                      controller: descriptionController,
                       decoration: InputDecoration(
                         hintText: "Mô tả",
                         hintStyle: UITextStyle.grey_16_w400,
@@ -186,8 +193,18 @@ class TaskDetailWidget extends StatelessWidget {
                     ),
                   Expanded(
                     child: GestureDetector(
+                      key: ValueKey("SaveBtn"),
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
+                        if (taskModel.title == null || (taskModel.title ?? "") == "") {
+                          ToastHelper.showToast(msg: "Hãy nhập tiêu đề", isTrue: false);
+                          return;
+                        }
+
+                        if (taskModel.description == null || (taskModel.description ?? "") == "") {
+                          ToastHelper.showToast(msg: "Hãy nhập mô tả", isTrue: false);
+                          return;
+                        }
                         showCupertinoDialog(
                           context: context,
                           barrierDismissible: true,
@@ -202,6 +219,7 @@ class TaskDetailWidget extends StatelessWidget {
                             ),
                             actions: [
                               CupertinoDialogAction(
+                                key: ValueKey("SaveConfirmYesBtn"),
                                 child: const Text(
                                   "Có",
                                   style: UITextStyle.blue_16_w400,
@@ -213,11 +231,11 @@ class TaskDetailWidget extends StatelessWidget {
                                   } else {
                                     onSaveBtnClicked?.call(taskModel);
                                   }
-
                                   Get.back();
                                 },
                               ),
                               CupertinoDialogAction(
+                                key: ValueKey("SaveConfirmNoBtn"),
                                 child: const Text(
                                   "Không",
                                   style: UITextStyle.black_16_w400,

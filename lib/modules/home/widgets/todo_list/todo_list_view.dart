@@ -9,7 +9,7 @@ import 'package:manabie_todolist/theme/ui_text_style.dart';
 
 class ToDoListView extends StatefulWidget {
   final int status;
-  const ToDoListView({Key? key,required this.status}) : super(key: key);
+  const ToDoListView({Key? key, required this.status}) : super(key: key);
 
   @override
   State<ToDoListView> createState() => _ToDoListViewState();
@@ -30,24 +30,27 @@ class _ToDoListViewState extends BaseViewState<ToDoListView, TodoListViewModel> 
   Widget build(BuildContext context) {
     super.build(context);
     return Obx(
-      () => CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
+      () => Scaffold(
+        appBar: AppBar(
           backgroundColor: UIColor.black,
-          middle: const Text(
+          title: const Text(
             "Todo List",
             style: UITextStyle.white_20_w700,
           ),
-          trailing: IconButton(
-            padding: const EdgeInsets.only(bottom: 6.0),
-            icon: const Icon(
-              CupertinoIcons.add,
-              color: UIColor.white,
+          actions: [
+            IconButton(
+              key: const ValueKey("AddTaskBtn"),
+              padding: const EdgeInsets.only(right: 10),
+              icon: const Icon(
+                CupertinoIcons.add,
+                color: UIColor.white,
+              ),
+              onPressed: viewModel.onAddBtnClicked,
             ),
-            onPressed: viewModel.onAddBtnClicked,
-          ),
+          ],
         ),
         backgroundColor: UIColor.white,
-        child: SizedBox(
+        body: SizedBox(
           width: double.infinity,
           child: viewModel.tasks.toList().isEmpty
               ? const Center(

@@ -17,7 +17,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   animated_bottom_navigation_bar: ^0.3.3
   responsive_framework: ^0.2.0
-  flutter_easyloading: ^3.0.3
+  flutter_easyloading:
+    git:
+      url: https://github.com/hkloudou/flutter_easyloading.git
+      ref: develop
   keyboard_service: ^2.0.2
   fluttertoast: ^8.0.9
 

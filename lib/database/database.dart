@@ -48,4 +48,9 @@ class DatabaseHelper {
     final AppDatabase db = await database;
     return await db.taskDao.deleteTask(task);
   }
+
+    static Future<void> deleteAll() async {
+    final AppDatabase db = await database;
+    return await db.taskDao.deleteAllData();
+  }
 }

@@ -233,10 +233,12 @@ packages:
   flutter_easyloading:
     dependency: "direct main"
     description:
-      name: flutter_easyloading
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.3"
+      path: "."
+      ref: develop
+      resolved-ref: af476774e1b43db8997cdda76717a64c5f2cf02e
+      url: "https://github.com/hkloudou/flutter_easyloading.git"
+    source: git
+    version: "3.0.4"
   flutter_lints:
     dependency: "direct dev"
     description:

@@ -34,6 +34,8 @@ class TodoListViewModel extends BaseViewModel {
           onCreateBtnClicked: onCreateBtnClicked,
           onDeleteBtnClicked: onDeleteBtnClicked,
           task: taskModel,
+          titleController: TextEditingController(text: taskModel?.title ?? ""),
+          descriptionController: TextEditingController(text: taskModel?.description ?? ""),
         );
       },
     );
@@ -55,7 +57,7 @@ class TodoListViewModel extends BaseViewModel {
       taskModel.isCompleted = 0;
       await DatabaseHelper.insertTask(taskModel);
       _tasks.add(taskModel);
-      _tasks.refresh();
+      getData();
       ToastHelper.showToast(msg: "Thêm công việc thành công");
     });
   }
