@@ -19,17 +19,23 @@ import 'package:manabie_todolist/modules/home/widgets/todo_list_item_widget.dart
 void main() {
 
   test('Check DB', () async {
+    // Check init
     await DatabaseHelper.deleteAll();
     List<TaskModel> tasks = await DatabaseHelper.getListTaskModel();
     expect(tasks, isEmpty);
-
-    await DatabaseHelper.insertTask(TaskModel(title: "Test Title", description: "Test Description", createdDate: "05-05-2022"));
+    // Check insert data
+    await DatabaseHelper.insertTask(TaskModel(title: "Test Title", description: "Test Description", createdDate: "05-05-2022", isCompleted: 0));
     expect(await DatabaseHelper.getListTaskModel(), isNotEmpty);
     expect((await DatabaseHelper.getListTaskModel())[0].title, "Test Title");
-
+    expect((await DatabaseHelper.getListTaskModel())[0].isCompleted, 0);
+    // Check update data
     await DatabaseHelper.updateTask(
-        TaskModel(id: (await DatabaseHelper.getListTaskModel())[0].id, title: "Test Title Updated", description: "Test Description", createdDate: "05-05-2022"));
+        TaskModel(id: (await DatabaseHelper.getListTaskModel())[0].id, title: "Test Title Updated", description: "Test Description", createdDate: "05-05-2022", isCompleted: 1));
     expect((await DatabaseHelper.getListTaskModel())[0].title, "Test Title Updated");
+    expect((await DatabaseHelper.getListTaskModel())[0].isCompleted, 1);
+    // Check delete data
+    await DatabaseHelper.deleteAll();
+    expect(tasks, isEmpty);
   });
 
   testWidgets('Check is HomeView', (WidgetTester tester) async {
